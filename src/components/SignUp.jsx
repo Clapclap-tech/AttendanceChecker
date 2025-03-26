@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { auth } from "./Firebase";
+import { auth, db } from "./firebase";
+import { setDoc, doc } from "firebase/firestore";
 
 function SignUp() {
 
     const [email, setEmail] = useState("");
-    const [idNumber, setIdNumber] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [studentId, setStudentID] = useState("");
+
+    const navigate = useNavigate();
+
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -16,8 +20,13 @@ function SignUp() {
           await createUserWithEmailAndPassword(auth,email,password);
           const user = auth.currentUser;
           console.log(user);
+          if(user) {
+            await setDoc(doc(db,"Users", user.uid), {
+              email: user.email,
+              studentID: studentId,
+            });
+          }
           console.log("User Registered");
-        
         } catch (error) {
             console.log(error.message);
         }
@@ -38,7 +47,14 @@ function SignUp() {
             <div>
               <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
               <div class="mt-2">
-                <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"></input>
+                <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6" placeholder="Enter Your Email Address"></input>
+              </div>
+            </div>
+
+            <div>
+              <label for="student-id" class="block text-sm/6 font-medium text-gray-900">Student ID</label>
+              <div class="mt-2">
+                <input type="text" name="studentID" id="student-id" onChange={(e) => setStudentID(e.target.value)} autoComplete="off" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6" placeholder="Enter Your Student ID"/>
               </div>
             </div>
 
@@ -49,13 +65,20 @@ function SignUp() {
               </div>
 
               <div class="mt-2">
-                <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)} autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"></input>
+                <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)} autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6" placeholder="Enter Your Password"></input>
+              </div>
+            </div>
+
+            <div>
+              <label for="confirm-password" class="block text-sm/6 font-medium text-gray-900">Confirm Password</label>
+              <div class="mt-2">
+                <input type="password" name="confirm-password" id="confirm-password" onChange={(e) => setConfirmPassword(e.target.value)} required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6" placeholder="Confirm Your Password"/>
               </div>
             </div>
 
             {/*submit button*/}
             <div>
-              <button type="submit" class="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Sign in</button>
+              <button type="submit" class="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Sign Up</button>
             </div>
           </form>
           {/**/}

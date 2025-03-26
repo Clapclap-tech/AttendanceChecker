@@ -1,6 +1,11 @@
-
+import { useState } from "react";
+import { getAuth, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function SignIn() {
+
+    
+
     return (
       <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         {/**/}
@@ -38,8 +43,8 @@ function SignIn() {
           </form>
           {/**/}
           <p class="mt-10 text-center text-sm/6 text-gray-500">
-            Not yet registered?
-            <a href="#" class="font-semibold text-blue-600 hover:text-blue-500"> Register Here</a>
+            Don't have an account?
+            <a href="#" class="font-semibold text-blue-600 hover:text-blue-500"> Sign Up</a>
           </p>
         </div>
       </div>

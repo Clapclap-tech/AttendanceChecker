@@ -12,8 +12,6 @@ dist
 dist-ssr
 *.local
 
-src/components/Firebase.jsx
-
 
 # Editor directories and files
 .vscode/*
@@ -25,3 +23,5 @@ src/components/Firebase.jsx
 *.njsproj
 *.sln
 *.sw?
+
+src/components/Firebase.jsx

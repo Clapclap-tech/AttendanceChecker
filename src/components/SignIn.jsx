@@ -1,10 +1,6 @@
-import { useState } from "react";
-import { getAuth, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+
 
 function SignIn() {
-
-    
 
     return (
       <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">

@@ -1,8 +1,5 @@
-import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { auth, db } from "./firebase";
-import { setDoc, doc } from "firebase/firestore";
+import { useState, useEffect } from "react";
+
 
 function SignUp() {
 
@@ -10,30 +7,46 @@ function SignUp() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [studentId, setStudentID] = useState("");
+    const [error, setError] = useState("");
 
-    const navigate = useNavigate();
-
-
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        try {
-          await createUserWithEmailAndPassword(auth,email,password);
-          const user = auth.currentUser;
-          console.log(user);
-          if(user) {
-            await setDoc(doc(db,"Users", user.uid), {
-              email: user.email,
-              studentID: studentId,
-            });
+    const handleInputChange = (e, type) => {
+      switch(type) {
+        case "email":
+          setError("");
+          setEmail(e.target.value);
+          if(e.target.value === "") {
+            setError("Email Address is Blank");
           }
-          console.log("User Registered");
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+          break;
+
+        case "password":
+          setError("");
+          setPassword(e.target.value);
+          if(e.target.value === "") {
+            setError("Password is Blank");
+          }
+          break;
+
+        case "confirmPassword":
+          setError("");
+          setConfirmPassword(e.target.value);
+          if(e.target.value === "") {
+            setError("Confirm Password is Blank");
+          }
+          break;
+          
+        case "studentId":
+          setError("");
+          setStudentID(e.target.value);
+          if(e.target.value === "") {
+            setError("Student ID is Blank");
+          }
+          break;
+      }
+    }
 
     return (
-      <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8" onSubmit={handleRegister}>
+      <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         {/**/}
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
           <img class="mx-auto h-30 w-auto" src="/logo.png " alt="CTU Logo"></img>

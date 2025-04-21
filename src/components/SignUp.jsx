@@ -2,42 +2,41 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function SignUp() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [studentId, setStudentID] = useState("");
-  const [error, setError] = useState("");
+  const [inputs, setInputs] = useState({});
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
+    const newErrors = {};
 
-    if (!email.trim()) {
-      setError("Email address is required.");
+    if (!inputs.email || !/\S+@\S+\.\S+/.test(inputs.email)) {
+      newErrors.email = "Valid email is required";
+    }
+
+    if (!inputs.studentID) {
+      newErrors.studentID = "Student ID is required";
+    }
+
+    if (!inputs.password || inputs.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    if (inputs.password !== inputs["confirm-password"]) {
+      newErrors["confirm-password"] = "Passwords do not match";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
-    if (!studentId.trim()) {
-      setError("Student ID is required.");
-      return;
-    }
-
-    if (!password) {
-      setError("Password is required.");
-      return;
-    }
-
-    if (!confirmPassword) {
-      setError("Please confirm your password.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    console.log("Form submitted:", { email, studentId, password });
+    setErrors({});
+    console.log("Form submitted:", inputs);
   };
 
   return (
@@ -50,19 +49,10 @@ function SignUp() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        {error && (
-          <div className="mb-4 text-red-600 text-sm font-medium text-center">
-            {error}
-          </div>
-        )}
-
         <form className="space-y-6" onSubmit={handleSubmit} method="POST">
           {/* Email */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-900"
-            >
+            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
               Email address
             </label>
             <div className="mt-2">
@@ -71,19 +61,17 @@ function SignUp() {
                 name="email"
                 id="email"
                 autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleChange}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
                 placeholder="Enter Your Email Address"
               />
+              {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
             </div>
           </div>
 
           {/* Student ID */}
           <div>
-            <label
-              htmlFor="student-id"
-              className="block text-sm font-medium text-gray-900"
-            >
+            <label htmlFor="student-id" className="block text-sm font-medium text-gray-900">
               Student ID
             </label>
             <div className="mt-2">
@@ -92,19 +80,17 @@ function SignUp() {
                 name="studentID"
                 id="student-id"
                 autoComplete="off"
-                onChange={(e) => setStudentID(e.target.value)}
+                onChange={handleChange}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
                 placeholder="Enter Your Student ID"
               />
+              {errors.studentID && <p className="text-sm text-red-600">{errors.studentID}</p>}
             </div>
           </div>
 
           {/* Password */}
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-900"
-            >
+            <label htmlFor="password" className="block text-sm font-medium text-gray-900">
               Password
             </label>
             <div className="mt-2">
@@ -113,19 +99,17 @@ function SignUp() {
                 name="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handleChange}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
                 placeholder="Enter Your Password"
               />
+              {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
             </div>
           </div>
 
           {/* Confirm Password */}
           <div>
-            <label
-              htmlFor="confirm-password"
-              className="block text-sm font-medium text-gray-900"
-            >
+            <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-900">
               Confirm Password
             </label>
             <div className="mt-2">
@@ -133,10 +117,13 @@ function SignUp() {
                 type="password"
                 name="confirm-password"
                 id="confirm-password"
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={handleChange}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
                 placeholder="Confirm Your Password"
               />
+              {errors["confirm-password"] && (
+                <p className="text-sm text-red-600">{errors["confirm-password"]}</p>
+              )}
             </div>
           </div>
 

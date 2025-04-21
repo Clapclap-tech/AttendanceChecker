@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 function SignIn() {
@@ -40,7 +41,7 @@ function SignIn() {
           {/**/}
           <p class="mt-10 text-center text-sm/6 text-gray-500">
             Don't have an account?
-            <a href="#" class="font-semibold text-blue-600 hover:text-blue-500"> Sign Up</a>
+            <Link to="/SignUp" href="#" class="font-semibold text-blue-600 hover:text-blue-500"> Sign Up</Link>
           </p>
         </div>
       </div>

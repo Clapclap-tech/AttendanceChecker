@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 
 function SignUp() {
@@ -97,7 +98,7 @@ function SignUp() {
           {/**/}
           <p class="mt-10 text-center text-sm/6 text-gray-500">
             Already have an account?
-            <a href="#" class="font-semibold text-blue-600 hover:text-blue-500"> Sign In</a>
+            <Link to="/" href="#" class="font-semibold text-blue-600 hover:text-blue-500"> Sign In</Link>
           </p>
         </div>
       </div>

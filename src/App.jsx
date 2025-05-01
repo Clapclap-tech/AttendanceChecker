@@ -3,6 +3,7 @@ import Footer from './components/Footer'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import { BrowserRouter, createBrowserRouter, RouterProvider} from 'react-router-dom'
+import FormInfo from './components/FormInfo'
 
 function App() {
   const route = createBrowserRouter([
@@ -13,6 +14,10 @@ function App() {
     {
       path:"/SignUp",
       element: <SignUp />,
+    },
+    {
+      path:"/Form",
+      element: <FormInfo />,
     },
   ]);
   return (

@@ -1,26 +1,24 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function SignUp() {
   const [inputs, setInputs] = useState({});
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
+    // Front-end validation (checking for empty fields or incorrect formats)
     if (!inputs.email || !/\S+@\S+\.\S+/.test(inputs.email)) {
       newErrors.email = "Valid email is required";
-    }
-
-    if (!inputs.studentID) {
-      newErrors.studentID = "Student ID is required";
     }
 
     if (!inputs.password || inputs.password.length < 6) {
@@ -37,8 +35,18 @@ function SignUp() {
     }
 
     setErrors({});
-    axios.post('http://localhost:8888/api/users/save', inputs);
-    console.log("Form submitted:", inputs);
+
+    try {
+      const res = await axios.post('http://localhost:8888/api/users/validate', { email: inputs.email });
+      
+      if (res.data.status === 0) {
+        setErrors({ email: res.data.message });
+      } else {
+        navigate("/Form", { state: { email: inputs.email, password: inputs.password } });
+      }
+    } catch (err) {
+      setErrors({ server: "Something went wrong. Please try again later." });
+    }
   };
 
   return (
@@ -52,24 +60,6 @@ function SignUp() {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={handleSubmit} method="POST">
-          {/* Name */}
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-900">
-              Full Name
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                name="name"
-                id="name"
-                autoComplete="name"
-                onChange={handleChange}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
-                placeholder="Enter Your Full Name"
-              />
-              {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
-            </div>
-          </div>
 
           {/* Email */}
           <div>
@@ -86,26 +76,11 @@ function SignUp() {
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
                 placeholder="Enter Your Email Address"
               />
-              {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
-            </div>
-          </div>
-
-          {/* Student ID */}
-          <div>
-            <label htmlFor="student-id" className="block text-sm font-medium text-gray-900">
-              Student ID
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                name="studentID"
-                id="student-id"
-                autoComplete="off"
-                onChange={handleChange}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
-                placeholder="Enter Your Student ID"
-              />
-              {errors.studentID && <p className="text-sm text-red-600">{errors.studentID}</p>}
+              {(errors.email || errors.server) && (
+                <p className="text-sm text-red-600">
+                  {errors.email || errors.server}
+                </p>
+              )}
             </div>
           </div>
 

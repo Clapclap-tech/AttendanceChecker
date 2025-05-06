@@ -1,11 +1,11 @@
-import SidebarHeader from './sidebarHeader.jsx';
+
 import { getSidebarData } from './sidebarData.jsx';
 import OpenDropdown from './openDropdown.jsx';
 import React, { useState } from 'react';
 
-function Sidebar() {
+function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
     const [dropdownStates, setDropdownStates] = useState({});
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true); 
+    
 
     const toggleDropdown = (id) => {
         setDropdownStates((prevState) => ({
@@ -18,7 +18,7 @@ function Sidebar() {
 
     return (
         <div className={`bg-gray-950 h-screen ${isSidebarOpen ? 'w-3/4' : 'w-16 bg-transparent'} flex flex-col justify-start items-start transition-all duration-300`}>
-            <SidebarHeader isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+            
             {isSidebarOpen && (
                 <ul>
                     {sidebarData.map((val, id) => {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, User, MoreVertical } from "lucide-react";
 
-const HomePage = () => {
+const HomePage = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const navigate = useNavigate();
   const [showSettings, setShowSettings] = useState(false);
 
@@ -12,10 +12,10 @@ const HomePage = () => {
     { label: "Logout", action: () => console.log("Logging out") },
   ];
 
-  const toggleMenu = () => {
-    console.log("Menu toggled");
-    // You can add sidebar toggle functionality here if needed
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
+  
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -24,7 +24,7 @@ const HomePage = () => {
         <div className="flex items-center">
           <button 
             className="mr-4 lg:mr-6" 
-            onClick={toggleMenu}
+            onClick={toggleSidebar}
             aria-label="Menu"
           >
             <Menu className="h-6 w-6" />

@@ -17,7 +17,7 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
     const sidebarData = getSidebarData(toggleDropdown, dropdownStates);
 
     return (
-        <div className={`bg-gray-950 h-screen ${isSidebarOpen ? 'w-3/4' : 'w-16 bg-transparent'} flex flex-col justify-start items-start transition-all duration-300`}>
+        <div className={`bg-gray-950 h-screen ${isSidebarOpen ? 'w-1/4' : 'w-1 bg-transparent'} flex flex-col justify-start items-start transition-all duration-300 rounded`}>
             
             {isSidebarOpen && (
                 <ul>

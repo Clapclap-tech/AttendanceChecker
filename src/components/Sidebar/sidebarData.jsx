@@ -1,6 +1,6 @@
-import Class from './assets/class.svg';
-import Schedule from './assets/schedule.svg';
-import Calendar from './assets/calendar.svg';
+import Class from './Assets/class.svg';
+import Schedule from './Assets/schedule.svg';
+import Calendar from './Assets/calendar.svg';
 import React from 'react';
 
 export const getSidebarData = (toggleDropdown, dropdownStates) => [

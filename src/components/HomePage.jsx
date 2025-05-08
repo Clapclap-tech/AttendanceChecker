@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, User, MoreVertical } from "lucide-react";
 
-const HomePage = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const HomePage = ({ isSidebarOpen, setIsSidebarOpen, toggleSidebar }) => {
   const navigate = useNavigate();
   const [showSettings, setShowSettings] = useState(false);
 
@@ -12,18 +12,13 @@ const HomePage = ({ isSidebarOpen, setIsSidebarOpen }) => {
     { label: "Logout", action: () => console.log("Logging out") },
   ];
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-  
-
   return (
     <div className="min-h-screen bg-white font-sans">
       {/* Header */}
       <header className="flex items-center justify-between p-4 border-b border-gray-200">
         <div className="flex items-center">
           <button 
-            className="mr-4 lg:mr-6" 
+            className={`${isSidebarOpen ? 'invisible w-0' : 'mr-4'}`}
             onClick={toggleSidebar}
             aria-label="Menu"
           >

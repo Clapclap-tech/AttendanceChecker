@@ -2,8 +2,9 @@
 import { getSidebarData } from './sidebarData.jsx';
 import OpenDropdown from './openDropdown.jsx';
 import React, { useState } from 'react';
+import { Menu } from 'lucide-react';
 
-function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
+function Sidebar({ isSidebarOpen, setIsSidebarOpen, toggleSidebar }) {
     const [dropdownStates, setDropdownStates] = useState({});
     
 
@@ -17,7 +18,10 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
     const sidebarData = getSidebarData(toggleDropdown, dropdownStates);
 
     return (
-        <div className={`bg-gray-950 h-screen ${isSidebarOpen ? 'w-1/4' : 'w-1 bg-transparent'} flex flex-col justify-start items-start transition-all duration-300 rounded`}>
+        <div className={`bg-gray-950 h-screen ${isSidebarOpen ? 'w-1/4' : 'overflow-hidden w-0'} flex flex-col justify-start items-start transition-all duration-300 rounded`}>
+            <button className='ml-6' onClick={toggleSidebar} aria-label="Menu" >
+                <Menu className='h-6 w-6 text-white mt-5' />
+            </button>
             
             {isSidebarOpen && (
                 <ul>

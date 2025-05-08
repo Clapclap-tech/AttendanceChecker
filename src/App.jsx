@@ -5,7 +5,10 @@ import SignUp from './components/SignUp'
 import { BrowserRouter, createBrowserRouter, RouterProvider} from 'react-router-dom'
 import FormInfo from './components/FormInfo'
 import HomePage from './components/HomePage'
-import Layout from './components/SidebarLayout'
+import ProfilePage from './components/ProfilePage'
+import Class from './components/Class'
+import Layout from './components/Sidebar/SidebarLayout'
+import { ClassProvider } from './components/ClassContext'
 
 
 function App() {
@@ -24,10 +27,18 @@ function App() {
     },
     {
       path:"/HomePage",
+      element: <Layout />
+    },
+    {
+      path:"/ProfilePage",
+      element: <ProfilePage />,
+    },
+    {
+      path:"/Class",
       element: (
-      <Layout>
-        <HomePage />,
-        </Layout>
+        <ClassProvider>
+          <Class />
+        </ClassProvider>
       ),
     },
   ]);

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Sidebar from "./sidebar";
-import HomePage from "../HomePage";
+import HomePage from "../LandingPage";
 
 const Layout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Shared state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
   
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);

@@ -1,52 +1,46 @@
-import Header from './components/Header'
-import Footer from './components/Footer'
-import SignIn from './components/SignIn'
-import SignUp from './components/SignUp'
-import { BrowserRouter, createBrowserRouter, RouterProvider} from 'react-router-dom'
-import FormInfo from './components/FormInfo'
-import HomePage from './components/HomePage'
-import ProfilePage from './components/ProfilePage'
-import Class from './components/Class'
-import Layout from './components/Sidebar/SidebarLayout'
-import { ClassProvider } from './components/ClassContext'
-
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import FormInfo from "./components/FormInfo";
+import ProfilePage from "./components/ProfilePage";
+import Class from "./components/Class";
+import { ClassProvider } from "./components/ClassContext";
+import MainLayout from "./components/MainLayout";
 function App() {
   const route = createBrowserRouter([
     {
-      path:"/",
+      path: "/",
+      element: <MainLayout />, 
+      children: [
+        { index: true, element: <LandingPage /> }, 
+        { path: "Form", element: <FormInfo /> },
+        { path: "ProfilePage", element: <ProfilePage /> },
+        {
+          path: "Class",
+          element: (
+            <ClassProvider>
+              <Class />
+            </ClassProvider>
+          ),
+        },
+      ],
+    },
+    {
+      path: "/SignIn",
       element: <SignIn />,
     },
     {
-      path:"/SignUp",
+      path: "/SignUp",
       element: <SignUp />,
     },
-    {
-      path:"/Form",
-      element: <FormInfo />,
-    },
-    {
-      path:"/HomePage",
-      element: <Layout />
-    },
-    {
-      path:"/ProfilePage",
-      element: <ProfilePage />,
-    },
-    {
-      path:"/Class",
-      element: (
-        <ClassProvider>
-          <Class />
-        </ClassProvider>
-      ),
-    },
   ]);
+
   return (
     <div className="App">
-        <RouterProvider router={route}></RouterProvider>
+      <RouterProvider router={route} />
     </div>
   );
 }
 
-export default App
+export default App;

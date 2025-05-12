@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    fetch("http://localhost/api/check-auth.php", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => setIsLoggedIn(data.loggedIn));
+  }, []);
 
   return (
     <div className="min-h-screen bg-white font-sans flex flex-col items-center justify-center text-center px-4">
@@ -18,25 +28,45 @@ const LandingPage = () => {
           TO GET STARTED, SELECT A ROLE
         </div>
 
+        {/* Conditionally render role buttons or sign-in/sign-up buttons */}
         <div className="flex flex-row mt-6 space-x-2 sm:space-x-4 w-full justify-center px-4 sm:px-0">
-          <button 
-            onClick={() => navigate("/student")}
-            className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
-          >
-            CLASSROOM
-          </button>
-          <button 
-            onClick={() => navigate("/teacher")}
-            className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
-          >
-            SCHEDULE
-          </button>
-          <button 
-            onClick={() => navigate("/admin")}
-            className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
-          >
-            CALENDAR
-          </button>
+          {isLoggedIn ? (
+            <>
+              <button
+                onClick={() => navigate("/student")}
+                className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
+              >
+                CLASSROOM
+              </button>
+              <button
+                onClick={() => navigate("/teacher")}
+                className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
+              >
+                SCHEDULE
+              </button>
+              <button
+                onClick={() => navigate("/admin")}
+                className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
+              >
+                CALENDAR
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => navigate("/SignIn")}
+                className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => navigate("/SignUp")}
+                className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
+              >
+                Sign Up
+              </button>
+            </>
+          )}
         </div>
       </main>
     </div>

@@ -6,13 +6,28 @@ const LandingPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost/api/check-auth.php", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => setIsLoggedIn(data.loggedIn));
+    async function checkAuth() {
+      try {
+        const res = await fetch('http://localhost:8888/api/check-auth.php', {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        setIsLoggedIn(data.loggedIn);
+      } catch (error) {
+        console.error('Failed to fetch auth status:', error);
+        setIsLoggedIn(false); 
+      }
+    }
+
+    checkAuth();
   }, []);
+
 
   return (
     <div className="min-h-screen bg-white font-sans flex flex-col items-center justify-center text-center px-4">

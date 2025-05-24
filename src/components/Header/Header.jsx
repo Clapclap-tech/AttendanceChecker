@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Menu, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Header = ({ toggleSidebar, userName = "John Doe", userNumber = "123456789" }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
@@ -22,6 +24,21 @@ const Header = ({ toggleSidebar, userName = "John Doe", userNumber = "123456789"
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleLogout = () => {
+    axios.post("http://localhost:8888/api/logout.php", {}, { withCredentials: true })
+      .then((res) => {
+        if (res.data.status === 1) {
+          navigate("/SignIn");
+        } else {
+          console.error("Logout failed:", res.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Logout error:", error);
+      });
+  };
+
 
   return (
     <header className="flex items-center justify-between p-4 border-b border-gray-200">
@@ -59,7 +76,7 @@ const Header = ({ toggleSidebar, userName = "John Doe", userNumber = "123456789"
             <ul className="py-1">
               <li>
                 <Link
-                  to="/profile"
+                  to="/ProfilePage"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Go to Profile
@@ -75,7 +92,7 @@ const Header = ({ toggleSidebar, userName = "John Doe", userNumber = "123456789"
               </li>
               <li>
                 <button
-                  onClick={() => console.log("Logout clicked")}
+                  onClick={handleLogout}
                   className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Logout

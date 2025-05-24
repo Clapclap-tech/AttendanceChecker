@@ -1,11 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, User, MoreVertical, Menu } from "lucide-react";
+import axios from "axios";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const [gender, setGender] = useState("male");
   const [showSettings, setShowSettings] = useState(false);
+
+  const [profile, setProfile] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    studentID: "",
+    birthdate: "",
+    street: "",
+    city: "",
+    zip: "",
+  });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8888/api/get-user.php", { withCredentials: true })
+      .then((res) => {
+        if (res.data.status === 1) {
+          const user = res.data.user;
+          setProfile({
+            email: user.email || "",
+            firstName: user.firstName || "",
+            lastName: user.lastName || "",
+            studentID: user.studentID || "",
+            birthdate: user.birthdate || "",
+            street: user.streetAddress || "",
+            city: user.cityAddress || "",
+            zip: user.zipCode || "",
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load profile:", err);
+      });
+  }, []);
+
+  const handleSave = () => {
+    axios
+      .post("http://localhost:8888/api/update-profile.php", profile, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.status === 1) {
+          alert("Profile updated successfully!");
+        } else {
+          alert("Failed to update profile.");
+        }
+      })
+      .catch(() => alert("Error updating profile."));
+  };
+
+  const updateField = (field, value) => {
+    setProfile((prev) => ({ ...prev, [field]: value }));
+  };
 
   const settingsOptions = [
     { label: "Settings", action: () => navigate("/settings") },
@@ -18,8 +71,8 @@ const ProfilePage = () => {
       {/* Header */}
       <header className="flex items-center justify-between p-4 border-b border-gray-200">
         <div className="flex items-center">
-          <button 
-            className="mr-4" 
+          <button
+            className="mr-4"
             onClick={() => navigate(-1)}
             aria-label="Back"
           >
@@ -28,7 +81,7 @@ const ProfilePage = () => {
           <span className="font-medium">My Profile</span>
         </div>
         <div className="flex items-center relative">
-          <button 
+          <button
             onClick={() => setShowSettings(!showSettings)}
             aria-label="More options"
           >
@@ -58,10 +111,14 @@ const ProfilePage = () => {
         {/* Profile Overview */}
         <div className="flex flex-col items-center mb-6">
           <div className="w-20 h-20 bg-gray-300 rounded-full mb-3 flex items-center justify-center">
-            <span className="text-2xl font-medium">EM</span>
+            <span className="text-2xl font-medium">
+              {profile.firstName?.[0] || ""}{profile.lastName?.[0] || ""}
+            </span>
           </div>
-          <h2 className="text-xl font-medium">Emat</h2>
-          <p className="text-gray-600">@gmail.com</p>
+          <h2 className="text-xl font-medium">
+            {profile.firstName} {profile.lastName}
+          </h2>
+          <p className="text-gray-600">{profile.email}</p>
         </div>
 
         {/* Profile Form */}
@@ -70,37 +127,48 @@ const ProfilePage = () => {
             <h3 className="font-medium mb-3">Basic Detail</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm text-gray-500 mb-1">Full name</label>
-                <p className="font-medium">Emat</p>
+                <label className="block text-sm text-gray-500 mb-1">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  value={profile.firstName}
+                  onChange={(e) => updateField("firstName", e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">Date of birth</label>
-                <p className="font-medium">April 32</p>
+                <label className="block text-sm text-gray-500 mb-1">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  value={profile.lastName}
+                  onChange={(e) => updateField("lastName", e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">Gender</label>
-                <div className="flex space-x-4">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="gender"
-                      checked={gender === "male"}
-                      onChange={() => setGender("male")}
-                      className="mr-2"
-                    />
-                    Male
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="gender"
-                      checked={gender === "female"}
-                      onChange={() => setGender("female")}
-                      className="mr-2"
-                    />
-                    Female
-                  </label>
-                </div>
+                <label className="block text-sm text-gray-500 mb-1">
+                  Date of Birth
+                </label>
+                <input
+                  type="date"
+                  value={profile.birthdate}
+                  onChange={(e) => updateField("birthdate", e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500 mb-1">
+                  Student ID
+                </label>
+                <input
+                  type="text"
+                  value={profile.studentID}
+                  onChange={(e) => updateField("studentID", e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
               </div>
             </div>
           </section>
@@ -109,10 +177,35 @@ const ProfilePage = () => {
             <h3 className="font-medium mb-3">Contact Detail</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm text-gray-500 mb-1">Mobile number</label>
+                <label className="block text-sm text-gray-500 mb-1">
+                  Street Address
+                </label>
                 <input
                   type="text"
-                  defaultValue=" "
+                  value={profile.street}
+                  onChange={(e) => updateField("street", e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500 mb-1">
+                  City
+                </label>
+                <input
+                  type="text"
+                  value={profile.city}
+                  onChange={(e) => updateField("city", e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500 mb-1">
+                  Zip Code
+                </label>
+                <input
+                  type="text"
+                  value={profile.zip}
+                  onChange={(e) => updateField("zip", e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded"
                 />
               </div>
@@ -120,36 +213,19 @@ const ProfilePage = () => {
                 <label className="block text-sm text-gray-500 mb-1">Email</label>
                 <input
                   type="email"
-                  defaultValue=" "
+                  value={profile.email}
+                  onChange={(e) => updateField("email", e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded"
+                  disabled
                 />
               </div>
             </div>
           </section>
 
-          <section>
-            <h3 className="font-medium mb-3">Personal Detail</h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm text-gray-500 mb-1">Weight (kg)</label>
-                <input
-                  type="number"
-                  defaultValue=" "
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-gray-500 mb-1">Height (cm)</label>
-                <input
-                  type="number"
-                  defaultValue=" "
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-              </div>
-            </div>
-          </section>
-
-          <button className="w-full bg-black text-white py-3 rounded font-medium">
+          <button
+            onClick={handleSave}
+            className="w-full bg-black text-white py-3 rounded font-medium"
+          >
             Save
           </button>
         </div>
@@ -157,9 +233,7 @@ const ProfilePage = () => {
 
       {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around p-3">
-        <button 
-          className="flex flex-col items-center text-black"
-        >
+        <button className="flex flex-col items-center text-black">
           <User className="h-5 w-5 mb-1" />
           <span className="text-xs">Profile</span>
         </button>

@@ -16,14 +16,7 @@ function App() {
         { index: true, element: <LandingPage /> }, 
         { path: "Form", element: <FormInfo /> },
         { path: "ProfilePage", element: <ProfilePage /> },
-        {
-          path: "Class",
-          element: (
-            <ClassProvider>
-              <Class />
-            </ClassProvider>
-          ),
-        },
+        { path: "Class", element: ( <ClassProvider> <Class /> </ClassProvider> ), },
       ],
     },
     {

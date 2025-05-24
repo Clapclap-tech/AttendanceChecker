@@ -35,9 +35,7 @@ if ($stmt->fetchColumn() > 0) {
     exit;
 }
 
-
 $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
-
 
 $sql = "INSERT INTO users (email, password, firstName, lastName, studentID, birthdate, streetAddress, cityAddress, zipCode)
         VALUES (:email, :password, :firstName, :lastName, :studentID, :birthdate, :streetAddress, :cityAddress, :zipCode)";

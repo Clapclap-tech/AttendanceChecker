@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import GoogleClassroomClone from "./button/GoogleClassroomClone.jsx"
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const LandingPage = () => {
 
 
   return (
-    <div className="min-h-screen bg-white font-sans flex flex-col items-center justify-center text-center px-4">
+    <div className=" min-h-screen bg-white font-sans flex flex-col items-center justify-start text-center px-4 pt-12">
       <main className="max-w-3xl w-full">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
           <div>WELCOME TO</div>
@@ -44,7 +45,7 @@ const LandingPage = () => {
         </div>
 
         {/* Conditionally render role buttons or sign-in/sign-up buttons */}
-        <div className="flex flex-row mt-6 space-x-2 sm:space-x-4 w-full justify-center px-4 sm:px-0">
+        <div className=" mt-6 space-x-2 sm:space-x-4 w-full justify-center px-4 sm:px-0">
           {isLoggedIn ? (
             <>
               <button
@@ -80,6 +81,8 @@ const LandingPage = () => {
               >
                 Sign Up
               </button>
+              {/* interactive button */}
+              <GoogleClassroomClone className="absolute bottom-10" />
             </>
           )}
         </div>

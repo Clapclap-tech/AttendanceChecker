@@ -231,7 +231,7 @@ const ProfilePage = () => {
         </div>
       </main>
 
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation 
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around p-3">
         <button className="flex flex-col items-center text-black">
           <User className="h-5 w-5 mb-1" />
@@ -242,7 +242,9 @@ const ProfilePage = () => {
           <span className="text-xs">Menu</span>
         </button>
       </nav>
+      */}
     </div>
+    
   );
 };
 

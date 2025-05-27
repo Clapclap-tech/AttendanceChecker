@@ -24,6 +24,7 @@ function FormInfo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
+    console.log("submit", inputs);
 
     if (!inputs.studentID) {
       newErrors.studentID = "Student ID is required";
@@ -42,7 +43,7 @@ function FormInfo() {
       const res = await axios.post("http://localhost:8888/api/users/save", finalData);
 
       if (res.data.status === 1) {
-        navigate("/SignIn"); 
+        navigate("/"); 
       } else {
         if (res.data.message.includes("Student ID")) {
           setErrors((prev) => ({ ...prev, studentID: res.data.message }));

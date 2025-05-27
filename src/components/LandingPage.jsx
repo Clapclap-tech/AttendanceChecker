@@ -45,9 +45,8 @@ const LandingPage = () => {
         </div>
 
         {/* Conditionally render role buttons or sign-in/sign-up buttons */}
-        <div className=" mt-6 space-x-2 sm:space-x-4 w-full justify-center px-4 sm:px-0">
-          {isLoggedIn ? (
-            <>
+        <div className=" flex flex-row mt-6 space-x-2 sm:space-x-1 justify-center">
+          
               <button
                 onClick={() => navigate("/student")}
                 className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
@@ -66,25 +65,7 @@ const LandingPage = () => {
               >
                 CALENDAR
               </button>
-            </>
-          ) : (
-            <>
-              <button
-                onClick={() => navigate("/SignIn")}
-                className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => navigate("/SignUp")}
-                className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
-              >
-                Sign Up
-              </button>
-              {/* interactive button */}
-              <GoogleClassroomClone className="absolute bottom-10" />
-            </>
-          )}
+          
         </div>
       </main>
     </div>

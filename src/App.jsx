@@ -10,7 +10,7 @@ import MainLayout from "./components/MainLayout";
 function App() {
   const route = createBrowserRouter([
     {
-      path: "/",
+      path: "/LandingPage",
       element: <MainLayout />, 
       children: [
         { index: true, element: <LandingPage /> }, 
@@ -20,7 +20,7 @@ function App() {
       ],
     },
     {
-      path: "/SignIn",
+      path: "/",
       element: <SignIn />,
     },
     {

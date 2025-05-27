@@ -42,7 +42,7 @@ function SignUp() {
       if (res.data.status === 0) {
         setErrors({ email: res.data.message });
       } else {
-        navigate("/Form", { state: { email: inputs.email, password: inputs.password } });
+        navigate("/LandingPage/Form", { state: { email: inputs.email, password: inputs.password } });
       }
     } catch (err) {
       setErrors({ server: "Something went wrong. Please try again later." });
@@ -136,7 +136,7 @@ function SignUp() {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Already have an account?
-          <Link to="/SignIn" className="font-semibold text-blue-600 hover:text-blue-500">
+          <Link to="/" className="font-semibold text-blue-600 hover:text-blue-500">
             {" "}Sign In
           </Link>
         </p>

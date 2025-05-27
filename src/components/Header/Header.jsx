@@ -76,7 +76,7 @@ const Header = ({ toggleSidebar, userName = "John Doe", userNumber = "123456789"
             <ul className="py-1">
               <li>
                 <Link
-                  to="/ProfilePage"
+                  to="/LandingPage/ProfilePage"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Go to Profile

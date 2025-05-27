@@ -28,7 +28,7 @@ const SignIn = () => {
       .then((response) => {
         if (response.data.status === 1) {
           // Successful login
-          navigate("/"); // Redirect to landing page
+          navigate("/LandingPage"); // Redirect to landing page
         } else {
           setError(response.data.message); // Show error message from backend
         }

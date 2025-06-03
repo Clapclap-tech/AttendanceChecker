@@ -65,7 +65,7 @@ const LandingPage = () => {
               >
                 CALENDAR
               </button>
-              <GoogleClassroomClone/>
+              < Button/>
           
         </div>
       </main>

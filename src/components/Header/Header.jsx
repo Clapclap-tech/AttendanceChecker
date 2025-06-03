@@ -63,7 +63,9 @@ const Header = ({ toggleSidebar }) => {
           <Menu className="h-6 w-6" />
         </button>
         <span className="font-medium text-sm sm:text-base">
-          <img className="mx-auto h-15 w-auto" src="/logo.png" alt="Logo" />
+          <Link to="/LandingPage">
+            <img className="mx-auto h-15 w-auto" src="/logo.png" alt="Logo" />
+          </Link>
         </span>
         <span className="font-medium ml-2 sm:ml-4 text-sm sm:text-base">
           ATTENDANCE CHECKER

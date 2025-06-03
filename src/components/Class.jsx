@@ -51,7 +51,7 @@ function Class() {
     const { classes } = useClasses();
 
     return (
-        <div className="bg-gray-100 flex justify-center items-center min-h-screen">
+        <div className="flex justify-center items-center min-h-screen">
             <div className="space-y-4">
                 {classes.map(cls => (
                     <ClassCard key={cls.id} id={cls.id} />

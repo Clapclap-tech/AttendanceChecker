@@ -7,16 +7,24 @@ import ProfilePage from "./components/ProfilePage";
 import Class from "./components/Class";
 import { ClassProvider } from "./components/ClassContext";
 import MainLayout from "./components/MainLayout";
+
 function App() {
   const route = createBrowserRouter([
     {
       path: "/LandingPage",
-      element: <MainLayout />, 
+      element: <MainLayout />,
       children: [
-        { index: true, element: <LandingPage /> }, 
+        { index: true, element: <LandingPage /> },
         { path: "Form", element: <FormInfo /> },
         { path: "ProfilePage", element: <ProfilePage /> },
-        { path: "Class", element: ( <ClassProvider> <Class /> </ClassProvider> ), },
+        {
+          path: "Class",
+          element: (
+            <ClassProvider>
+              <Class />
+            </ClassProvider>
+          ),
+        },
       ],
     },
     {

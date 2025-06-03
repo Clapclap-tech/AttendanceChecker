@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import GoogleClassroomClone from "./button/GoogleClassroomClone.jsx"
+import Button from "./button/Button.jsx"
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -41,26 +41,26 @@ const LandingPage = () => {
         </h1>
 
         <div className="mt-6 sm:mt-8 text-gray-800 hover:text-black transition-colors text-base sm:text-lg">
-          TO GET STARTED, SELECT A ROLE
+          TO GET STARTED, SELECT A PLACE TO START
         </div>
 
         {/* Conditionally render role buttons or sign-in/sign-up buttons */}
         <div className=" flex flex-row mt-6 space-x-2 sm:space-x-1 justify-center">
           
               <button
-                onClick={() => navigate("/student")}
+                onClick={() => navigate("/LandingPage/Class")}
                 className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
               >
                 CLASSROOM
               </button>
               <button
-                onClick={() => navigate("/teacher")}
+                onClick={() => navigate("/LandingPage/ProfilePage")}
                 className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
               >
-                SCHEDULE
+                PROFILE
               </button>
               <button
-                onClick={() => navigate("/admin")}
+                onClick={() => navigate("/LandingPage/Calendar")}
                 className="bg-black text-white px-4 sm:px-6 py-2 rounded hover:bg-gray-800 transition-colors text-sm sm:text-base"
               >
                 CALENDAR

@@ -18,19 +18,6 @@ export const getSidebarData = (toggleDropdown, dropdownStates) => [
         ],
     },
     {
-        id: 2,
-        title: 'Schedule',
-        icon: Schedule,
-        onClick: () => {
-            toggleDropdown(2);
-            console.log('Schedule clicked', dropdownStates[2]);
-        },
-        dropdownItems: [
-            { label: 'Monday', onClick: () => console.log('Monday clicked') },
-            { label: 'Tuesday', onClick: () => console.log('Tuesday clicked') },
-        ],
-    },
-    {
         id: 3,
         title: 'Calendar',
         icon: Calendar,

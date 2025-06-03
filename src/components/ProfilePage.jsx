@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, User, MoreVertical, Menu } from "lucide-react";
+import QRCode from 'react-qr-code';
 import axios from "axios";
 
 const ProfilePage = () => {
@@ -119,6 +120,21 @@ const ProfilePage = () => {
             {profile.firstName} {profile.lastName}
           </h2>
           <p className="text-gray-600">{profile.email}</p>
+        </div>
+
+        {/* QR */}
+        <div className="mt-4 text-center">
+          <div className="inline-block bg-white p-2 shadow-md rounded">
+            <QRCode
+              value={JSON.stringify({
+                id: profile.studentID,
+                name: `${profile.firstName} ${profile.lastName}`,
+                email: profile.email,
+                birthdate: profile.birthdate,
+              })}
+              size={128}
+            />
+          </div>
         </div>
 
         {/* Profile Form */}

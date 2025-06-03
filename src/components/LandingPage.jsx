@@ -41,7 +41,7 @@ const LandingPage = () => {
         </h1>
 
         <div className="mt-6 sm:mt-8 text-gray-800 hover:text-black transition-colors text-base sm:text-lg">
-          TO GET STARTED, SELECT A ROLE
+          TO GET STARTED, SELECT A PLACE TO START
         </div>
 
         {/* Conditionally render role buttons or sign-in/sign-up buttons */}

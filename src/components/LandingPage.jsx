@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import GoogleClassroomClone from "./button/GoogleClassroomClone.jsx"
+import Button from "./button/Button.jsx"
 
 const LandingPage = () => {
   const navigate = useNavigate();

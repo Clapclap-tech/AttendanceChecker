@@ -31,7 +31,7 @@ const Attendance = ({ onSeeHistory }) => {
           </button>
         </div>
 
-        {/* Fixed Headers */}
+        {/* Headers */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="bg-black text-white text-center py-3 px-4 font-medium text-sm sm:text-base">
             (DATE)
@@ -41,7 +41,7 @@ const Attendance = ({ onSeeHistory }) => {
           </div>
         </div>
 
-        {/* Fixed Date and Course Info */}
+        {/* Current Date and Course Section */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-gray-100 text-center py-3 px-4 text-sm sm:text-base font-medium text-gray-700">
             {currentDate}

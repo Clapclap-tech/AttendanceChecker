@@ -21,10 +21,9 @@ function App() {
         { index: true, element: <LandingPage /> },
         { path: "Form", element: <FormInfo /> },
         { path: "ProfilePage", element: <ProfilePage /> },
-        {
-          path: "Class",
-          element: <Class />
-        },
+        { path: "Class", element: <Class /> },
+        { path: "Task", element: <Task /> },
+        { path: "Calendar", element: <Calendar /> },
       ],
     },
     {
@@ -43,10 +42,7 @@ function App() {
       path: "/AttendanceHistory",
       element: <AttendanceHistory />,
     },
-    {
-      path: "/Task/:id",
-      element: <Task />,
-    },
+
   ]);
 
   return (

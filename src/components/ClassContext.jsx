@@ -3,6 +3,9 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const ClassContext = createContext();
 
 export const ClassProvider = ({ children }) => {
+
+    const [selectedClassID, setSelectedClassID] = useState(null);
+
     const [classes, setClasses] = useState(() => {
         const stored = localStorage.getItem('classes');
         return stored
@@ -25,7 +28,7 @@ export const ClassProvider = ({ children }) => {
     };
 
     return (
-        <ClassContext.Provider value={{ classes, updateClass }}>
+        <ClassContext.Provider value={{ classes, updateClass, selectedClassID, setSelectedClassID }}>
             {children}
         </ClassContext.Provider>
     );

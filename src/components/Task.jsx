@@ -1,12 +1,11 @@
-import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useClasses } from './ClassContext';
 import { Pencil, Trash2 } from 'lucide-react';
 
 function Task() {
-    const { id } = useParams();
+    const {selectedClassID} = useClasses(); 
     const { classes } = useClasses();
-    const cls = classes.find(c => c.id === parseInt(id));
+    const cls = classes.find(c => c.id === selectedClassID);
 
     const [tasks, setTasks] = useState([]);
 

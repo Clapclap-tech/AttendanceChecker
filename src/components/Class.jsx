@@ -1,12 +1,20 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Pencil } from 'lucide-react';
 import { useClasses } from './ClassContext';
 
 function ClassCard({ id }) {
+    const navigate = useNavigate();
+    const {setSelectedClassID} = useClasses(); 
     const { classes, updateClass } = useClasses();
     const cls = classes.find(c => c.id === id);
     const [isEditing, setIsEditing] = useState(false);
+
+    const handleSelect = (id) => {
+        setSelectedClassID(id);
+        navigate('/LandingPage/Task')
+    }
 
     return (
         <div className="bg-gray-700 text-white p-6 w-80 relative shadow-lg rounded-lg">
@@ -37,9 +45,13 @@ function ClassCard({ id }) {
                 </>
             ) : (
                 <>
-                    <Link to={`/task/${id}`} className="text-2xl font-bold hover:underline">
+                    <button className="text-2xl font-bold hover:underline"
+                        onClick={() => {handleSelect(id);
+                                        console.log("Clicked");
+                        }}
+                    >
                         {cls.name}
-                    </Link>
+                    </button>
                     <p className="text-sm">{cls.description}</p>
                 </>
             )}

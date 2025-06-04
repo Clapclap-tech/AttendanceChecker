@@ -5,6 +5,10 @@ import SignUp from "./components/SignUp";
 import FormInfo from "./components/FormInfo";
 import ProfilePage from "./components/ProfilePage";
 import Class from "./components/Class";
+import Calendar from "./components/calendar";
+import Task from "./components/Task";
+import Attendance from "./components/Attendance"
+import AttendanceHistory from "./components/AttendanceHistory"
 import { ClassProvider } from "./components/ClassContext";
 import MainLayout from "./components/MainLayout";
 
@@ -19,11 +23,7 @@ function App() {
         { path: "ProfilePage", element: <ProfilePage /> },
         {
           path: "Class",
-          element: (
-            <ClassProvider>
-              <Class />
-            </ClassProvider>
-          ),
+          element: <Class />
         },
       ],
     },
@@ -35,11 +35,25 @@ function App() {
       path: "/SignUp",
       element: <SignUp />,
     },
+    {
+      path: "/Attendance",
+      element: <Attendance />,
+    },
+    {
+      path: "/AttendanceHistory",
+      element: <AttendanceHistory />,
+    },
+    {
+      path: "/Task/:id",
+      element: <Task />,
+    },
   ]);
 
   return (
     <div className="App">
-      <RouterProvider router={route} />
+      <ClassProvider>
+        <RouterProvider router={route} />
+      </ClassProvider>
     </div>
   );
 }

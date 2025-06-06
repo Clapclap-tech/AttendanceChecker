@@ -7,8 +7,8 @@ import ProfilePage from "./components/ProfilePage";
 import Class from "./components/Class/Class";
 import Calendar from "./components/calendar";
 import Task from "./components/Class/Task";
-import Attendance from "./components/Attendance"
-import AttendanceHistory from "./components/AttendanceHistory"
+import Attendance from "./components/Attendance";
+import AttendanceHistory from "./components/AttendanceHistory";
 import { ClassProvider } from "./components/Class/ClassContext";
 import MainLayout from "./components/MainLayout";
 
@@ -24,6 +24,8 @@ function App() {
         { path: "Class", element: <Class /> },
         { path: "Task", element: <Task /> },
         { path: "Calendar", element: <Calendar /> },
+        { path: "Attendance", element: <Attendance /> },               
+        { path: "AttendanceHistory", element: <AttendanceHistory /> }, 
       ],
     },
     {
@@ -34,15 +36,6 @@ function App() {
       path: "/SignUp",
       element: <SignUp />,
     },
-    {
-      path: "/Attendance",
-      element: <Attendance />,
-    },
-    {
-      path: "/AttendanceHistory",
-      element: <AttendanceHistory />,
-    },
-
   ]);
 
   return (

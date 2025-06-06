@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useClasses } from './ClassContext';
 import { Pencil, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; // ✅ Import navigate
 
 function Task() {
-    const { selectedClassID } = useClasses(); 
-    const { classes } = useClasses();
+    const { selectedClassID, classes } = useClasses(); 
     const cls = classes.find(c => c.id === selectedClassID);
+    const navigate = useNavigate(); // ✅ Hook for navigation
 
     const [tasks, setTasks] = useState([]);
 
@@ -53,21 +54,31 @@ function Task() {
                         </button>
                     </div>
                 </div>
+
                 <div className="mt-4 space-y-4">
                     {tasks.map((task, index) => (
                         <div
                             key={index}
-                            className="bg-gray-300 p-4 flex items-center justify-between text-2xl font-bold shadow-lg rounded-lg w-full min-w-[350px] mx-auto relative"
+                            onClick={() => !task.isEditing && navigate('/LandingPage/Attendance')}
+                            className={`cursor-pointer bg-gray-300 p-4 flex items-center justify-between text-2xl font-bold shadow-lg rounded-lg w-full min-w-[350px] mx-auto relative ${
+                                task.isEditing ? 'cursor-default' : 'hover:bg-gray-400'
+                            }`}
                         >
-                            <div className="absolute top-2 right-2 flex items-center space-x-2">
+                            <div className="absolute top-2 right-2 flex items-center space-x-2 z-10">
                                 <button
-                                    onClick={() => toggleEdit(index)}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleEdit(index);
+                                    }}
                                     className="text-gray-700 hover:text-gray-900"
                                 >
                                     <Pencil size={16} />
                                 </button>
                                 <button
-                                    onClick={() => handleDeleteTask(index)}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDeleteTask(index);
+                                    }}
                                     className="text-gray-700 hover:text-gray-900"
                                     aria-label="Delete Task"
                                 >
@@ -80,7 +91,8 @@ function Task() {
                                     type="text"
                                     value={task.name}
                                     onChange={(e) => updateTaskName(index, e.target.value)}
-                                    className="flex-1 p-2 bg-gray-200 text-black outline-none rounded" 
+                                    className="flex-1 p-2 bg-gray-200 text-black outline-none rounded"
+                                    onClick={(e) => e.stopPropagation()} // prevent triggering nav
                                 />
                             ) : (
                                 <span>{task.name}</span>

@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Pencil } from 'lucide-react';
 
-const AttendanceHistory = ({ onBack }) => {
+const AttendanceHistory = () => {
+  const navigate = useNavigate();
   const [showDateDropdown, setShowDateDropdown] = useState(false);
   const [showCourseDropdown, setShowCourseDropdown] = useState(false);
   const [selectedDate, setSelectedDate] = useState('Select Date');
   const [selectedCourse, setSelectedCourse] = useState('Select Course & Section');
 
-  // Placeholder data - replace with actual data from backend
   const availableDates = [
     'Monday, June 3, 2025',
-    'Friday, May 31, 2025', 
+    'Friday, May 31, 2025',
     'Wednesday, May 29, 2025',
     'Monday, May 27, 2025',
     'Friday, May 24, 2025'
@@ -19,7 +19,7 @@ const AttendanceHistory = ({ onBack }) => {
 
   const availableCourses = [
     'CS-101 Section A',
-    'CS-101 Section B', 
+    'CS-101 Section B',
     'CS-102 Section A',
     'MATH-201 Section C',
     'ENG-101 Section B'
@@ -48,11 +48,11 @@ const AttendanceHistory = ({ onBack }) => {
         {/* Header with Back Button */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
           <h1 className="text-xl sm:text-2xl font-bold text-gray-800">CLASS 1 ATTENDANCE HISTORY</h1>
-          <button 
-            onClick={onBack}
+          <button
+            onClick={() => navigate('/LandingPage/Task')}
             className="text-blue-600 hover:text-blue-800 font-medium underline transition-colors duration-200"
           >
-            ← Back to Attendance
+            ← Back to Task
           </button>
         </div>
 
@@ -80,7 +80,7 @@ const AttendanceHistory = ({ onBack }) => {
               {selectedDate}
               <span className="float-right">▼</span>
             </button>
-            
+
             {showDateDropdown && (
               <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 shadow-lg z-10 max-h-60 overflow-y-auto">
                 {availableDates.map((date, index) => (
@@ -108,7 +108,7 @@ const AttendanceHistory = ({ onBack }) => {
               {selectedCourse}
               <span className="float-right">▼</span>
             </button>
-            
+
             {showCourseDropdown && (
               <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 shadow-lg z-10 max-h-60 overflow-y-auto">
                 {availableCourses.map((course, index) => (
@@ -133,15 +133,17 @@ const AttendanceHistory = ({ onBack }) => {
               <div className="bg-gray-600 text-white py-3 px-4 font-medium text-sm sm:text-base">
                 {student.name}
               </div>
-              
+
               {/* Attendance Status */}
-              <div className={`py-3 px-4 font-medium text-sm sm:text-base text-center border-2 ${
-                student.status === 'PRESENT' 
-                  ? 'bg-green-50 border-green-300 text-green-700' 
-                  : student.status === 'EXCUSED'
-                  ? 'bg-yellow-50 border-yellow-300 text-yellow-700'
-                  : 'bg-red-50 border-red-300 text-red-700'
-              }`}>
+              <div
+                className={`py-3 px-4 font-medium text-sm sm:text-base text-center border-2 ${
+                  student.status === 'PRESENT'
+                    ? 'bg-green-50 border-green-300 text-green-700'
+                    : student.status === 'EXCUSED'
+                    ? 'bg-yellow-50 border-yellow-300 text-yellow-700'
+                    : 'bg-red-50 border-red-300 text-red-700'
+                }`}
+              >
                 {student.status}
               </div>
             </div>

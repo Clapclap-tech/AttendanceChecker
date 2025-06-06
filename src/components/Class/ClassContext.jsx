@@ -2,36 +2,30 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 const ClassContext = createContext();
 
-export const ClassProvider = ({ children }) => {
+export function ClassProvider({ children }) {
+  const [classes, setClasses] = useState([]);
+  const [selectedClassID, setSelectedClassID] = useState(null);
 
-    const [selectedClassID, setSelectedClassID] = useState(null);
+  useEffect(() => {
+    fetch('http://localhost:8888/api/class.php') // Adjust URL
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setClasses(data);
+        } else {
+          console.error('Invalid data format received:', data);
+        }
+      })
+      .catch(err => console.error('Failed to load classes:', err));
+  }, []);
 
-    const [classes, setClasses] = useState(() => {
-        const stored = localStorage.getItem('classes');
-        return stored
-            ? JSON.parse(stored)
-            : [
-                { id: 1, name: 'CLASS 1', description: 'CLASS DESCRIPTION' },
-                { id: 2, name: 'CLASS 2', description: 'CLASS DESCRIPTION' },
-                { id: 3, name: 'CLASS 3', description: 'CLASS DESCRIPTION' },
-              ];
-    });
+  return (
+    <ClassContext.Provider value={{ classes, setSelectedClassID, selectedClassID }}>
+      {children}
+    </ClassContext.Provider>
+  );
+}
 
-    useEffect(() => {
-        localStorage.setItem('classes', JSON.stringify(classes));
-    }, [classes]);
-
-    const updateClass = (id, newData) => {
-        setClasses(prev =>
-            prev.map(cls => (cls.id === id ? { ...cls, ...newData } : cls))
-        );
-    };
-
-    return (
-        <ClassContext.Provider value={{ classes, updateClass, selectedClassID, setSelectedClassID }}>
-            {children}
-        </ClassContext.Provider>
-    );
-};
-
-export const useClasses = () => useContext(ClassContext);
+export function useClasses() {
+  return useContext(ClassContext);
+}

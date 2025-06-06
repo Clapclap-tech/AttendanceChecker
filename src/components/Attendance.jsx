@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Pencil } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-const Attendance = ({ onSeeHistory }) => {
+const Attendance = () => {
+  const navigate = useNavigate();
   const currentDate = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -23,8 +22,14 @@ const Attendance = ({ onSeeHistory }) => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
           <h1 className="text-xl sm:text-2xl font-bold text-gray-800">CLASS 1 ATTENDANCE</h1>
+          <button
+            onClick={() => navigate('/LandingPage/Task')}
+            className="text-blue-600 hover:text-blue-800 font-medium underline transition-colors duration-200"
+          >
+            ← Back to Task
+          </button>
           <button 
-            onClick={onSeeHistory}
+            onClick={() => navigate('/LandingPage/AttendanceHistory')}
             className="text-blue-600 hover:text-blue-800 font-medium underline transition-colors duration-200"
           >
             SEE HISTORY

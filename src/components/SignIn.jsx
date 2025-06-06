@@ -27,10 +27,9 @@ const SignIn = () => {
       })
       .then((response) => {
         if (response.data.status === 1) {
-          // Successful login
-          navigate("/LandingPage"); // Redirect to landing page
+          navigate("/LandingPage");
         } else {
-          setError(response.data.message); // Show error message from backend
+          setError(response.data.message);
         }
       })
       .catch((err) => {

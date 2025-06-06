@@ -4,12 +4,12 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import FormInfo from "./components/FormInfo";
 import ProfilePage from "./components/ProfilePage";
-import Class from "./components/Class";
+import Class from "./components/Class/Class";
 import Calendar from "./components/calendar";
-import Task from "./components/Task";
+import Task from "./components/Class/Task";
 import Attendance from "./components/Attendance"
 import AttendanceHistory from "./components/AttendanceHistory"
-import { ClassProvider } from "./components/ClassContext";
+import { ClassProvider } from "./components/Class/ClassContext";
 import MainLayout from "./components/MainLayout";
 
 function App() {

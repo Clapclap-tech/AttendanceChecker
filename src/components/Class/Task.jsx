@@ -3,7 +3,7 @@ import { useClasses } from './ClassContext';
 import { Pencil, Trash2 } from 'lucide-react';
 
 function Task() {
-    const {selectedClassID} = useClasses(); 
+    const { selectedClassID } = useClasses(); 
     const { classes } = useClasses();
     const cls = classes.find(c => c.id === selectedClassID);
 
@@ -39,8 +39,8 @@ function Task() {
     if (!cls) return <p className="text-center mt-10">Class not found</p>;
 
     return (
-        <div className="bg-gray-100 flex justify-center items-center min-h-screen px-4 md:px-0">
-            <div className="space-y-4 max-w-lg w-full">
+        <div className="bg-gray-100 flex justify-center items-start min-h-screen px-4 pt-6 md:px-0">
+            <div className="space-y-4 max-w-3xl w-full">
                 <div className="bg-gray-700 text-white p-6 flex flex-col justify-start shadow-lg rounded-lg">
                     <h1 className="text-4xl font-bold">{cls.name}</h1>
                     <p className="mt-2">{cls.description}</p>
@@ -57,7 +57,7 @@ function Task() {
                     {tasks.map((task, index) => (
                         <div
                             key={index}
-                            className="bg-gray-300 p-4 flex items-center justify-between text-2xl font-bold shadow-lg rounded-lg w-full max-w-[400px] mx-auto relative"
+                            className="bg-gray-300 p-4 flex items-center justify-between text-2xl font-bold shadow-lg rounded-lg w-full min-w-[350px] mx-auto relative"
                         >
                             <div className="absolute top-2 right-2 flex items-center space-x-2">
                                 <button
